@@ -1,5 +1,5 @@
 
-![BLE_HackMe](https://raw.githubusercontent.com/smartlockpicking/BLE_HackMe/master/logo.png)
+![BLE_HackMe](https://raw.githubusercontent.com/smartlockpicking/BLE_HackMe/main/logo.png)
 
 
 # Bluetooth Low Energy hardware-less HackMe
