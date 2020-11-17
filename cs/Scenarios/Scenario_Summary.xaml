@@ -1,0 +1,50 @@
+﻿<Page
+    x:Class="BLE_Hackme.Scenario_Summary"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BLE_Hackme"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="using:BLE_Hackme.UserControls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <ScrollViewer x:Name="Scrolltest" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="12,10,12,12">
+        <StackPanel x:Name="Stacktest">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Summary" Style="{StaticResource SampleHeaderTextStyle}"/>
+            </StackPanel>
+
+            <TextBlock x:Name="CurrentStatusText" TextWrapping="Wrap" Margin="0,0,0,0" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition  Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" x:Name="ListOfScenarios" Orientation="Vertical" Margin="0,10,0,0" />
+
+                <!--        https://pixabay.com/illustrations/trophy-award-victory-winner-cup-3037779/    -->
+                <Image x:Name="Trophy" Grid.Column="1" Source="../Assets/trophy.jpg" Width="300" Visibility="Collapsed"/>
+            </Grid>
+
+            <!-- https://freesound.org/people/lchapman1980/sounds/439896/ -->
+            <MediaElement x:Name="Applause" Visibility="Collapsed" Source="ms-appx:///Assets/applause.mp3" AutoPlay="False" IsLooping="False" />
+
+            <RichTextBlock x:Name="CongratulationText" TextWrapping="Wrap" Visibility="Collapsed" Margin="0,30,0,0">
+                <Paragraph FontSize="20">
+                    Congratulations!!!
+                </Paragraph>
+                <Paragraph>
+                    If you are interested in more, please check
+                    <Hyperlink NavigateUri="https://www.smartlockpicking.com">www.smartlockpicking.com</Hyperlink>
+                    for updates.
+                </Paragraph>
+            </RichTextBlock>
+
+        </StackPanel>
+    </ScrollViewer>
+
+</Page>

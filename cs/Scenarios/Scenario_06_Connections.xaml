@@ -1,0 +1,109 @@
+﻿<Page
+    x:Class="BLE_Hackme.Scenario_06_Connections"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BLE_Hackme"
+    xmlns:uc="using:BLE_Hackme.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="12,10,12,12">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="BLE connections, services, characteristics" Style="{StaticResource SampleHeaderTextStyle}"/>
+                <FontIcon x:Name="Solved" Style="{StaticResource ScenarioCompletedIconStyle}" Glyph="&#xE930;" />
+            </StackPanel>
+            
+            <uc:ScenarioSubHeaderIntro />
+            
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    So far you have passively observed advertisements transmitted by your HackMe device.
+                    It was basically one way communication from Broadcaster to nearby Observers (your smartphone).
+                The data was publicly available and no pairing was required.
+                </Paragraph>
+                <Paragraph>
+                    Now, you will finally connect and explore another use scenario: where a GATT Client ("Central", your smartphone) connects to GATT Server ("Peripheral", your BLE HackMe device).
+                </Paragraph>
+                <Paragraph>
+                    The GATT (Generic Attribute Profile) is another Bluetooth specification, which organizes data exchange between connected devices.
+                The main concept introduced here includes so-called Attributes, especially Services and Characteristics:
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    - A <Bold>Service</Bold> groups sub-objects (Characteristics) by specific functionality.
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    - A <Bold>Characteristic</Bold> is an object holding some information (Value), which can be read or written to.
+                </Paragraph>
+                <Paragraph Margin="0,10,0,0">
+                    The access rights (read/notify/write) are defined in Characteristic's <Bold>Properties</Bold>.
+                </Paragraph>
+                <Paragraph>
+                    Each Service and Characteristic has an
+                    <Bold>UUID</Bold> associated. The commonly used UUIDs (for example "battery level", "heart rate", ...) are registered by Bluetooth SIG, 
+                    and have a short (16-bit) form. For example: Device Name Characteristic: 0x2A00, Battery Level Characteristic: 0x2A19.
+                </Paragraph>
+                <Paragraph>
+                    For proprietary use, for example switching on/off specific vendor's BLE smart light bulb, manufacturers use their own, full length UUIDs.
+                    They can be randomly generated and don't need to be registered and assigned by Bluetooth organization. Just the associated mobile application (or other connecting device) needs to know it.
+                </Paragraph>
+            </RichTextBlock>
+            
+            <uc:ScenarioSubHeaderTask />
+            
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    Your HackMe device should be visible again as your computer hostname (scan again to find it).
+                Use the "Connect" button to initiate connection. The application will show the list of BLE "services" available on the device.
+                Some services (including Generic Access and Generic Attribute) are mandatory, and you should see them in every BLE device.
+                </Paragraph>
+                <Paragraph>
+                    Tap on a service name in order to expand characteristics inside of this service. Note the characteristic UUIDs and Properties displayed in the application.
+                </Paragraph>
+                <Paragraph Margin="0,5,0,0">
+                    Your task is to list all the characteristics' UUIDs of the "Generic Access" service.
+                </Paragraph>
+                
+            </RichTextBlock>
+
+            <uc:ScenarioSubHeaderSubmit />
+            
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Enter comma separated list of characteristic UUIDs included in the Generic Access service" Margin="10,5,5,5"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="ValueToEnter" PlaceholderText="Enter the value here" Margin="10,5,5,5" />
+                    <Button x:Name="Submit" Content="Submit" Click="{x:Bind ValueSubmitButton_Click}" Margin="10,5,5,5"/>
+                </StackPanel>
+            </StackPanel>
+
+            <uc:ScenarioSubHeaderHints />
+
+            <StackPanel Orientation="Vertical" x:Name="Hint1" Visibility="Collapsed" Margin="0,5,0,5" >
+                <TextBlock TextWrapping="Wrap">           
+                  If you are having trouble connecting to your HackMe device, try switching to previous task (with BLE advertisements) and back. 
+                    It will re-start the advertisement (with another Bluetooth address), so you should scan again to find it.
+                </TextBlock>
+            </StackPanel>
+
+
+            <StackPanel Orientation="Vertical" x:Name="Hint2" Visibility="Collapsed" Margin="0,5,0,5">
+                <RichTextBlock TextWrapping="Wrap">
+                    <Paragraph>
+                        The list of Generic Access service characteristics should look like this:
+                    </Paragraph>
+                    <Paragraph>
+                        <InlineUIContainer>
+                            <Image Source="../Assets/nrf_connect_generic_access_characteristics.png" Width="300" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                        </InlineUIContainer>
+                    </Paragraph>
+
+                </RichTextBlock>
+            </StackPanel>
+
+
+        </StackPanel>
+    </ScrollViewer>
+
+</Page>

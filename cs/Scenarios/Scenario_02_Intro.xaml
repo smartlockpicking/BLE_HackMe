@@ -1,0 +1,114 @@
+﻿<Page
+    x:Class="BLE_Hackme.Scenario_02_Intro"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BLE_Hackme"
+    xmlns:uc="using:BLE_Hackme.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="12,10,12,12" >
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="First steps" Style="{StaticResource SampleHeaderTextStyle}"/>
+                <FontIcon x:Name="Solved" Style="{StaticResource ScenarioCompletedIconStyle}" Glyph="&#xE930;" />
+            </StackPanel>
+            <uc:ScenarioSubHeaderIntro />
+            
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    You are undoubtely familiar with Bluetooth, and most likely use it every day - for example in wireless mouse, headset or car audio. 
+                Despite sharing common name, Bluetooth Low Energy is however a different technology.
+                As the name implies - it aims to preserve energy, hence typical applications include rather occasional exchange of small data packets. 
+                Most common usage scenarios include:
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    - a <Bold>Broadcaster</Bold> that transmits some one-way data ("<Bold>Advertisement</Bold>") to all nearby
+                    <Bold>Observers</Bold> (for example a "beacon" device broadcasting indoor location to nearby phones)
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    - BLE Client ("<Bold>Central</Bold>", for example mobile application) to Server ("<Bold>Peripheral</Bold>", for example smart lock) communication
+                </Paragraph>
+                <Paragraph>
+                    We will start with the BLE broadcast advertisements.
+                </Paragraph>
+            </RichTextBlock>
+
+            <uc:ScenarioSubHeaderTask />
+
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    If everything went correctly, the HackMe application should now be broadcasting BLE packets. Let's see if it works! 
+                Probably the easiest way is to use your smartphone, and there are several free applications to do the job. 
+                The recommended one is
+                    <Hyperlink NavigateUri="https://www.nordicsemi.com/Software-and-tools/Development-Tools/nRF-Connect-for-mobile">nRF Connect</Hyperlink> - for its unique features including low-level BLE debug information and macro scripts.
+                    It is available for both <Hyperlink NavigateUri="https://play.google.com/store/apps/details?id=no.nordicsemi.android.mcp">Android</Hyperlink> and
+                    <Hyperlink NavigateUri="https://apps.apple.com/us/app/nrf-connect/id1054362403">iOS</Hyperlink>,
+                    however iOS version lacks several important features required to solve many of the upcoming tasks.
+                </Paragraph>
+                <Paragraph>
+                    For Bluetooth access, Android
+                    <Hyperlink NavigateUri="https://developer.android.com/guide/topics/connectivity/bluetooth#Permissions">requires</Hyperlink> location permission from the application, 
+                    so you will have to grant it during installation.
+                    Once started, the application will show nearby BLE devices. 
+                    Beside optional device name, you will notice the device's adapter address, 
+                    bonding (pairing) information, as well as signal strength (swiping to right will show its change in time) and frequency of the broadcasted packets (delay in ms).
+                    For connectable devices, there is also optional "CONNECT" button:
+                </Paragraph>
+                <Paragraph>
+                    <InlineUIContainer>
+                        <Image Source="../Assets/nrf_connect_scan_desc.png" Width="300" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                    </InlineUIContainer>
+                 </Paragraph>
+                <Paragraph>
+                    Depending on your environment, you may see lots of BLE packets, and it might be difficult to locate your HackMe device.
+                    One of the ways to limit the list of discovered devices is to use filtering (select down arrow by the "No filter"), for example based on the signal strength (RSSI). 
+                    It is measured in decibels (dBm), and the lower value means stronger signal. To match only the nearest devices, slide the RSSI value to about "-60":
+                </Paragraph>
+                <Paragraph>
+                    <InlineUIContainer>
+                        <Image Source="../Assets/nrf_connect_filter_rssi.png" Width="300" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                    </InlineUIContainer>
+                </Paragraph>
+                <Paragraph>
+                    Note that scanning will automatically stop after a while ("STOP SCANNING" -> "SCAN"), and it may be needed to start again.
+                </Paragraph>
+            </RichTextBlock>
+
+            <uc:ScenarioSubHeaderSubmit />
+
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Enter the name of your HackMe device:" Margin="10,5,5,5"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="ValueToEnter" PlaceholderText="Enter the value here" Margin="10,5,5,5" />
+                    <Button x:Name="Submit" Content="Submit" Click="{x:Bind ValueSubmitButton_Click}" Margin="10,5,5,5"/>
+                </StackPanel>
+            </StackPanel>
+
+            <uc:ScenarioSubHeaderHints />
+
+            <StackPanel Orientation="Vertical" x:Name="Hint1" Visibility="Collapsed" Margin="0,5,0,5">
+                <TextBlock TextWrapping="Wrap">           
+                  Your device should be visible as your computer hostname.
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint2" Visibility="Collapsed" Margin="0,5,0,5">
+                <TextBlock TextWrapping="Wrap">           
+                  The first 15 characters of your computer name as visible for the application:
+                </TextBlock>
+                <TextBlock x:Name="DeviceName" Text="??? Could not determine device name ..."/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint3" Visibility="Collapsed" Margin="0,5,0,5">
+                <TextBlock TextWrapping="Wrap">           
+                       If you still cannot see your simulated device via Bluetooth, try turning the Bluetooth interface off and on again, and then restart the application.
+                </TextBlock>
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

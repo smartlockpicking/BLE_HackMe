@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{445C51F0-1B60-5DF7-8798-DC8C1F7D0C90}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BLE_Hackme</RootNamespace>
+    <AssemblyName>BLE Hackme</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.19041.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.17134.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BLEServices\CurrentTimeCharacteristic.cs" />
+    <Compile Include="BLEServices\CurrentTimeService.cs" />
+    <Compile Include="BLEServices\iBeacon.cs" />
+    <Compile Include="BLEServices\QuickLockHistoryDataCharacteristic.cs" />
+    <Compile Include="BLEServices\QuickLockHistoryControlCharacteristic.cs" />
+    <Compile Include="BLEServices\QuickLockOpenTimeCharacteristic.cs" />
+    <Compile Include="BLEServices\QuickLockUnlockStatusCharacteristic.cs" />
+    <Compile Include="BLEServices\QuickLockAuthStatusCharacteristic.cs" />
+    <Compile Include="BLEServices\QuickLockHistoryService.cs" />
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scenarios\Scenario_02_Intro.xaml.cs">
+      <DependentUpon>Scenario_02_Intro.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scenarios\Scenario_05_ManufacturerAdvertisements.xaml.cs">
+      <DependentUpon>Scenario_05_ManufacturerAdvertisements.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scenarios\Scenario_07_Read.xaml.cs">
+      <DependentUpon>Scenario_07_Read.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scenarios\Scenario_09_Descriptors.xaml.cs">
+      <DependentUpon>Scenario_09_Descriptors.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scenarios\Scenario_11_WriteCommand.xaml.cs">
+      <DependentUpon>Scenario_11_WriteCommand.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scenarios\Scenario_16_QuickLockLogs.xaml.cs">
+      <DependentUpon>Scenario_16_QuickLockLogs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scenarios\Scenario_Summary.xaml.cs">
+      <DependentUpon>Scenario_Summary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scenarios\Scenario_15_QuickLockReplay.xaml.cs">
+      <DependentUpon>Scenario_15_QuickLockReplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SmartLockUserControl.xaml.cs">
+      <DependentUpon>SmartLockUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\LightBulbUserControl.xaml.cs">
+      <DependentUpon>LightBulbUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+    </Compile>
+    <Compile Include="BLE.cs" />
+    <Compile Include="BLEServices\BatteryLevelCharacteristic.cs" />
+    <Compile Include="BLEServices\LightBulbColorCharacteristic.cs" />
+    <Compile Include="BLEServices\LightBulbTTSCharacteristic.cs" />
+    <Compile Include="BLEServices\LightBulbSwitchCharacteristic.cs" />
+    <Compile Include="BLEServices\BatteryService.cs" />
+    <Compile Include="BLEServices\LightBulbService.cs" />
+    <Compile Include="BLEServices\GenericGattCharacteristic.cs" />
+    <Compile Include="BLEServices\GenericGattService.cs" />
+    <Compile Include="BLEServices\HeartRateMeasurementCharacteristic.cs" />
+    <Compile Include="BLEServices\HeartRateService.cs" />
+    <Compile Include="BLEServices\Helpers.cs" />
+    <Compile Include="BLEServices\QuickLockCommandCharacteristic.cs" />
+    <Compile Include="BLEServices\QuickLockUsernameCharacteristic.cs" />
+    <Compile Include="BLEServices\QuickLockAuthCharacteristic.cs" />
+    <Compile Include="BLEServices\QuickLockMainService.cs" />
+    <Compile Include="Scenarios\Scenario_01_Compatibility.xaml.cs">
+      <DependentUpon>Scenario_01_Compatibility.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Constants.cs" />
+    <Compile Include="ScenariosConfiguration.cs" />
+    <Compile Include="Scenarios\Scenario_03_Advertisements.xaml.cs">
+      <DependentUpon>Scenario_03_Advertisements.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scenarios\Scenario_04_Beacons.xaml.cs">
+      <DependentUpon>Scenario_04_Beacons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scenarios\Scenario_06_Connections.xaml.cs">
+      <DependentUpon>Scenario_06_Connections.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scenarios\Scenario_08_Notifications.xaml.cs">
+      <DependentUpon>Scenario_08_Notifications.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scenarios\Scenario_12_Macros.xaml.cs">
+      <DependentUpon>Scenario_12_Macros.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scenarios\Scenario_14_PasswordBrute.xaml.cs">
+      <DependentUpon>Scenario_14_PasswordBrute.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scenarios\Scenario_13_RGB.xaml.cs">
+      <DependentUpon>Scenario_13_RGB.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scenarios\Scenario_10_Write.xaml.cs">
+      <DependentUpon>Scenario_10_Write.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ScenarioSubHeaderHints.xaml.cs">
+      <DependentUpon>ScenarioSubHeaderHints.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ScenarioSubHeaderIntro.xaml.cs">
+      <DependentUpon>ScenarioSubHeaderIntro.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ScenarioSubHeaderSimulatedDevice.xaml.cs">
+      <DependentUpon>ScenarioSubHeaderSimulatedDevice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ScenarioSubHeaderSubmit.xaml.cs">
+      <DependentUpon>ScenarioSubHeaderSubmit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ScenarioSubHeaderTask.xaml.cs">
+      <DependentUpon>ScenarioSubHeaderTask.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Scenarios\Scenario_02_Intro.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Scenarios\Scenario_05_ManufacturerAdvertisements.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Scenarios\Scenario_07_Read.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Scenarios\Scenario_09_Descriptors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Scenarios\Scenario_11_WriteCommand.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Scenarios\Scenario_16_QuickLockLogs.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Scenarios\Scenario_Summary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Scenarios\Scenario_15_QuickLockReplay.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\SmartLockUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\LightBulbUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Scenarios\Scenario_01_Compatibility.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Scenarios\Scenario_03_Advertisements.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Scenarios\Scenario_04_Beacons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Scenarios\Scenario_06_Connections.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Scenarios\Scenario_08_Notifications.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Scenarios\Scenario_12_Macros.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Scenarios\Scenario_14_PasswordBrute.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Scenarios\Scenario_13_RGB.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Scenarios\Scenario_10_Write.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ScenarioSubHeaderHints.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ScenarioSubHeaderIntro.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ScenarioSubHeaderSimulatedDevice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ScenarioSubHeaderSubmit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ScenarioSubHeaderTask.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\applause.mp3" />
+    <Content Include="Assets\ble_hackme.png" />
+    <Content Include="Assets\LargeTile.scale-100.png" />
+    <Content Include="Assets\LargeTile.scale-200.png" />
+    <Content Include="Assets\LargeTile.scale-400.png" />
+    <Content Include="Assets\nrf_connect_advertisement_data_format_display.png" />
+    <Content Include="Assets\nrf_connect_advertisement_details.png" />
+    <Content Include="Assets\nrf_connect_advertisement_flags.png" />
+    <Content Include="Assets\nrf_connect_battery_level.png" />
+    <Content Include="Assets\nrf_connect_filter_rssi.png" />
+    <Content Include="Assets\nrf_connect_generic_access_characteristics.png" />
+    <Content Include="Assets\nrf_connect_heart_rate_notification.png" />
+    <Content Include="Assets\nrf_connect_ibeacon_advertisement.png" />
+    <Content Include="Assets\nrf_connect_ibeacon_advertisement_as_ble41.png" />
+    <Content Include="Assets\nrf_connect_ibeacon_raw_explained.png" />
+    <Content Include="Assets\nrf_connect_import_macro.png" />
+    <Content Include="Assets\nrf_connect_macro_add_delay.png" />
+    <Content Include="Assets\nrf_connect_macro_available.png" />
+    <Content Include="Assets\nrf_connect_macro_delay_set_ms.png" />
+    <Content Include="Assets\nrf_connect_macro_export_to_xml.png" />
+    <Content Include="Assets\nrf_connect_macro_functionality.png" />
+    <Content Include="Assets\nrf_connect_macro_functionality_small.png" />
+    <Content Include="Assets\nrf_connect_macro_menu.png" />
+    <Content Include="Assets\nrf_connect_macro_pass_brute.png" />
+    <Content Include="Assets\nrf_connect_macro_repeat.png" />
+    <Content Include="Assets\nrf_connect_macro_save.png" />
+    <Content Include="Assets\nrf_connect_macro_send_pass_single.png" />
+    <Content Include="Assets\nrf_connect_macro_start_recording.png" />
+    <Content Include="Assets\nrf_connect_microsoft_advertisement.png" />
+    <Content Include="Assets\nrf_connect_notify_arrow.png" />
+    <Content Include="Assets\nrf_connect_quicklock_history_service.png" />
+    <Content Include="Assets\nrf_connect_raw_advertisement_desc.png" />
+    <Content Include="Assets\nrf_connect_read_arrow.png" />
+    <Content Include="Assets\nrf_connect_scan_desc.png" />
+    <Content Include="Assets\nrf_connect_text_descriptor.png" />
+    <Content Include="Assets\nrf_connect_write_01.png" />
+    <Content Include="Assets\nrf_connect_write_arrow.png" />
+    <Content Include="Assets\nrf_connect_write_hello_command.png" />
+    <Content Include="Assets\nrf_connect_write_text_option.png" />
+    <Content Include="Assets\nrf_connect_write_value_form.png" />
+    <Content Include="Assets\quicklock_date_format_decompiled.png" />
+    <Content Include="Assets\quicklock_sniff.jpg" />
+    <Content Include="Assets\rick.wmv" />
+    <Content Include="Assets\SmallTile-sdk.altform-lightunplated_targetsize-16.png" />
+    <Content Include="Assets\SmallTile-sdk.altform-lightunplated_targetsize-256.png" />
+    <Content Include="Assets\SmallTile-sdk.altform-lightunplated_targetsize-48.png" />
+    <Content Include="Assets\SmallTile-sdk.altform-unplated_targetsize-16.png" />
+    <Content Include="Assets\SmallTile-sdk.altform-unplated_targetsize-256.png" />
+    <Content Include="Assets\SmallTile-sdk.altform-unplated_targetsize-48.png" />
+    <Content Include="Assets\SmallTile-sdk.scale-100.png" />
+    <Content Include="Assets\SmallTile-sdk.scale-200.png" />
+    <Content Include="Assets\SmallTile-sdk.scale-400.png" />
+    <Content Include="Assets\SmallTile-sdk.targetsize-16.png" />
+    <Content Include="Assets\SmallTile-sdk.targetsize-256.png" />
+    <Content Include="Assets\SmallTile-sdk.targetsize-48.png" />
+    <Content Include="Assets\SmallTile.scale-100.png" />
+    <Content Include="Assets\SmallTile.scale-200.png" />
+    <Content Include="Assets\SmallTile.scale-400.png" />
+    <Content Include="Assets\smartlockpicking.png" />
+    <Content Include="Assets\Splash-sdk.scale-100.png" />
+    <Content Include="Assets\Splash-sdk.scale-200.png" />
+    <Content Include="Assets\Splash-sdk.scale-400.png" />
+    <Content Include="Assets\squareTile-sdk.scale-100.png" />
+    <Content Include="Assets\squareTile-sdk.scale-200.png" />
+    <Content Include="Assets\squareTile-sdk.scale-400.png" />
+    <Content Include="Assets\StoreLogo-sdk.scale-100.png" />
+    <Content Include="Assets\StoreLogo-sdk.scale-200.png" />
+    <Content Include="Assets\StoreLogo-sdk.scale-400.png" />
+    <Content Include="Assets\trophy.jpg" />
+    <Content Include="Assets\WideTile.scale-100.png" />
+    <Content Include="Assets\WideTile.scale-200.png" />
+    <Content Include="Assets\WideTile.scale-400.png" />
+    <Content Include="Assets\wireshark_apply_as_column.png" />
+    <Content Include="Assets\wireshark_apply_filter_write_request.png" />
+    <Content Include="Assets\wireshark_btatt_filter.png" />
+    <Content Include="Assets\wireshark_btatt_filter_small.png" />
+    <Content Include="Assets\wireshark_btatt_filter_smaller.png" />
+    <Content Include="Assets\wireshark_filter_write_request.png" />
+    <Content Include="Assets\wireshark_intro.png" />
+    <Content Include="Assets\wireshark_new_column_value.png" />
+    <Content Include="Assets\wireshark_quicklock_authentication.png" />
+    <Content Include="Properties\Default.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>5.0.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

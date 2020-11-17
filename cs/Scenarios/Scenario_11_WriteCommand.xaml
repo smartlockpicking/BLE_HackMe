@@ -1,0 +1,126 @@
+﻿<Page
+    x:Class="BLE_Hackme.Scenario_11_WriteCommand"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BLE_Hackme"
+    xmlns:uc="using:BLE_Hackme.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="12,10,12,12">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Various writes" Style="{StaticResource SampleHeaderTextStyle}"/>
+                <FontIcon x:Name="Solved" Style="{StaticResource ScenarioCompletedIconStyle}" Glyph="&#xE930;" />
+            </StackPanel>
+
+            <uc:ScenarioSubHeaderIntro />
+
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    By completing previous task, you learned how to write a value to characteristic.
+                Now it is time to get familiar with two types of write:
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    - <Bold>Write Request</Bold> (visible as "WRITE" property in nRF Connect) - the receiving device sends confirmation (write response)
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    - <Bold>Write Command</Bold> (visible as "WRITE NO RESPONSE" property in nRF Connect) - without confirmation
+                </Paragraph>
+                <Paragraph Margin="0,5,0,0">
+                    Characteristic can have just one of the write type properties, or both. 
+                    Most tools and applications automatically choose the best available one, usually prefering the Write Request (with confirmation).
+                    Some devices however, despite declaring both types of write as characteristic properties, 
+                    actually process just one of them. Therefore in some cases it may be required to manually choose the write type.
+                </Paragraph>
+            </RichTextBlock>
+            
+            <uc:ScenarioSubHeaderTask />
+
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    Within the light bulb service, find another characteristic responsible for Text To Speech functionality.
+                    It transforms the received text into speech, and our HackMe light bulb talks it back to you (turn your speaker on to hear it).
+                    Your task is to make the light bulb say "Hello". Note that this characteristic may interpret just one type of write.
+                </Paragraph>
+                <Paragraph Margin="0,5,0,5">
+                    The job consists of few tasks:
+                </Paragraph>
+                <Paragraph>
+                    <Bold>1. Find the TTS characteristic</Bold> - look for descriptors
+                </Paragraph>
+                <Paragraph Margin="0,5,0,0">
+                    <Bold>2. Figure out how to send a text to this characteristic</Bold>
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    The low level data, trasmitted to and from characteristics, is in hex.
+                    The most common way of encoding UTF characters to hex is Ascii Hex representation.
+                    For example, "Hi" translates into 0x48 0x69 ("4869" as raw bytes stream).
+                    You can use for example "to hex" recipe in 
+                    <Hyperlink NavigateUri="https://gchq.github.io/CyberChef/">CyberChef</Hyperlink> to try it out.
+                    </Paragraph>
+                <Paragraph Margin="10,5,0,0">
+                    For convenience, the nRF Connect allows to automatically encode various input types 
+                - including several numeric formats as well as text to hex. 
+                    The feature is available as select down option right next to value entry form in "Write" function.
+                </Paragraph>
+                <Paragraph Margin="0,5,0,0">
+                    <Bold>3. Sending as various write types</Bold>
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    nRF Connect will automatically select the more reliable Write Request with confirmations (unless only Write Command is available).
+                    Choose the "Advanced" option in write form to select write type.
+                </Paragraph>
+                <Paragraph Margin="0,5,0,0">
+                    Of course once you succeed in greeting the light bulb "Hello" to solve the task, you are free to send to it any text you like.
+                </Paragraph>
+
+                <Paragraph Margin="0,5,0,0">
+                    <Bold>Note</Bold>: if the HackMe application crashes after sending valid command, 
+                    your system (for example Windows Pro "N") may lack media pack required for TTS functionality.
+                    Please install "Microsoft Media Feature Pack".
+                </Paragraph>
+
+
+            </RichTextBlock>
+
+            <uc:ScenarioSubHeaderSimulatedDevice />
+                       
+            <uc:LightBulbUserControl x:Name="LightBulb" />
+
+            <MediaElement x:Name="TextToSpeech" />
+
+            <uc:ScenarioSubHeaderHints />
+
+            <StackPanel Orientation="Vertical" x:Name="Hint1" Visibility="Collapsed" >
+                <RichTextBlock TextWrapping="Wrap">
+                    <Paragraph>
+                        The write value form in nRF Connect allows to select the format of data to submit:
+                    </Paragraph>
+                    <Paragraph>
+                        <InlineUIContainer>
+                            <Image Source="../Assets/nrf_connect_write_text_option.png" Width="300" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                        </InlineUIContainer>
+                    </Paragraph>
+                </RichTextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint2" Visibility="Collapsed" >
+                <RichTextBlock TextWrapping="Wrap">
+                    <Paragraph>
+                        In order to send Write Command instead of default Write Request, choose "Command" in advanced options:
+                    </Paragraph>
+                    <Paragraph>
+                        <InlineUIContainer>
+                            <Image Source="../Assets/nrf_connect_write_hello_command.png" Width="300" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                        </InlineUIContainer>
+                    </Paragraph>
+                </RichTextBlock>
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+
+</Page>

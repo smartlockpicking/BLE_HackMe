@@ -1,0 +1,139 @@
+﻿<Page
+    x:Class="BLE_Hackme.Scenario_12_Macros"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BLE_Hackme"
+    xmlns:uc="using:BLE_Hackme.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="12,10,12,12">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Write automation" Style="{StaticResource SampleHeaderTextStyle}"/>
+                <FontIcon x:Name="Solved" Style="{StaticResource ScenarioCompletedIconStyle}" Glyph="&#xE930;" />
+            </StackPanel>
+            
+            <uc:ScenarioSubHeaderIntro />
+            
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    Typical communication with BLE device consists of a series of writes / reads / notifications.
+                In order to trigger specific functionality, it may be necessary to send multiple writes in sequence, 
+                sometimes to various characteristics, and often within short, limited time.
+                </Paragraph>
+            </RichTextBlock>
+
+            <uc:ScenarioSubHeaderTask />
+
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    You already know how to turn the light bulb on and off.
+                    Your current task is to blink it twice per second for at least a few seconds.
+                </Paragraph>
+                <Paragraph>
+                    Don't worry - the job does not require you to master extreme fast clicking in the application.
+                    Instead, let's introduce a very handy feature of nRF Connect:
+                    <Bold>Macros</Bold>.
+                </Paragraph>
+                <Paragraph Margin="0,5,0,0">
+                    The functionality is available after connecting to device and selecting the small red circle in bottom right corner:
+                    </Paragraph>
+                    <Paragraph>
+                        <InlineUIContainer>
+                            <Image Source="../Assets/nrf_connect_macro_functionality_small.png" Width="200" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                        </InlineUIContainer>
+                    </Paragraph>
+                    <Paragraph>
+                    Tap the red circle to start recording:
+                </Paragraph>
+                <Paragraph>
+                    <InlineUIContainer>
+                        <Image Source="../Assets/nrf_connect_macro_start_recording.png" Width="200" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                    </InlineUIContainer>
+                </Paragraph>
+                <Paragraph>
+                    Now send as usual any write you would like to record - for example turn the light on.
+                    Next, we can introduce a delay before sending another write.
+                    Tap the "hourglass" icon:
+                </Paragraph>
+                <Paragraph>
+                    <InlineUIContainer>
+                        <Image Source="../Assets/nrf_connect_macro_add_delay.png" Width="200" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                    </InlineUIContainer>
+                </Paragraph>
+                <Paragraph>
+                    Use + and - to set desired delay. 200-300ms will allow to blink twice per second.
+                </Paragraph>
+                <Paragraph>
+                    <InlineUIContainer>
+                        <Image Source="../Assets/nrf_connect_macro_delay_set_ms.png" Width="200" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                    </InlineUIContainer>
+                </Paragraph>
+                <Paragraph>
+                    After introducing delay, send the next write - which will turn the light bulb off, 
+                    followed by another delay.
+                    Once happy with your macro, stop recording by hitting the red "stop" button.
+                    You will be asked to name your new script, and choose an icon for it:
+                    </Paragraph>
+                <Paragraph>
+                        <InlineUIContainer>
+                            <Image Source="../Assets/nrf_connect_macro_save.png" Width="200" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                        </InlineUIContainer>
+                </Paragraph>
+                <Paragraph>
+                    Now, every time you are connected to a device with matching characteristics, 
+                    the macro will light up blue, and the play button will be enabled.
+                    Try if it works:
+                </Paragraph>
+                <Paragraph>
+                            <InlineUIContainer>
+                                <Image Source="../Assets/nrf_connect_macro_available.png" Width="200" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                            </InlineUIContainer>
+                </Paragraph>
+                <Paragraph>
+                    The only missing part is repeating it multiple times.
+                    Tap on the macro name to see its content and options. Select the "repeat" icon, and press play again:
+                </Paragraph>
+                <Paragraph>
+                                <InlineUIContainer>
+                                    <Image Source="../Assets/nrf_connect_macro_repeat.png" Width="200" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                                </InlineUIContainer>
+                 </Paragraph>
+            </RichTextBlock>
+
+            <uc:ScenarioSubHeaderSimulatedDevice />
+
+            <uc:LightBulbUserControl x:Name="LightBulb"/>
+
+
+            <uc:ScenarioSubHeaderHints />
+
+            <StackPanel Orientation="Vertical" x:Name="Hint1" Visibility="Collapsed" Margin="0,5,0,5" >
+                <RichTextBlock TextWrapping="Wrap">
+                    <Paragraph>
+                        More information about the nRF Connect macros functionality:
+                    </Paragraph>
+                    <Paragraph Margin="20,0,0,0">
+                        - Nordic Semiconductor blog post introducing macros:
+                    </Paragraph>
+                    <Paragraph Margin="30,0,0,0">
+                        <Hyperlink NavigateUri="https://devzone.nordicsemi.com/nordic/nordic-blog/b/blog/posts/nrf-connect-macros-currently-android-only">https://devzone.nordicsemi.com/nordic/nordic-blog/b/blog/posts/nrf-connect-macros-currently-android-only</Hyperlink>
+                    </Paragraph>
+                    <Paragraph Margin="20,0,0,0">
+                        - Video demo of the functionality, including recording own macros:
+                    </Paragraph>
+                    <Paragraph Margin="30,0,0,0">
+                        <Hyperlink NavigateUri="https://www.youtube.com/watch?v=QxT8FFph_zs">https://www.youtube.com/watch?v=QxT8FFph_zs</Hyperlink>
+                    </Paragraph>
+                </RichTextBlock>
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+
+    
+</Page>

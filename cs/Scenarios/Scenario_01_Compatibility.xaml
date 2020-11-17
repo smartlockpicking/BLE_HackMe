@@ -1,0 +1,113 @@
+﻿<Page
+    x:Class="BLE_Hackme.Scenario_01_Compatibility"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BLE_Hackme"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="12,10,12,12">
+        <StackPanel>
+            <TextBlock Text="Hello!" Style="{StaticResource SampleHeaderTextStyle}"/>
+            <RichTextBlock TextWrapping="Wrap" Margin="0,10,0,0">
+                <Paragraph>
+                    Hello and welcome to Bluetooth Low Energy hardware-less hackme!
+               </Paragraph>
+                <Paragraph>
+                    The project aims to introduce the BLE protocol and its security basics.
+                Your computer with Bluetooth interface will simulate various BLE devices - on the radio layer working exactly as real ones.
+                In a series of tasks you will get familiar with BLE advertisements, beacons, connections, take control over talking BLE smart bulb, 
+                reverse-engineer the communication, brute force passwords, and even hack real smart lock!
+               </Paragraph>
+                <Paragraph>
+                    For solving the tasks you will need Android phone (iOS has limited low level BLE features). 
+                It is also possible to use other BLE tools, for example running on Linux, 
+                however details are not covered here and you are on your own.
+                </Paragraph>
+                <Paragraph>
+                    In a rare case when your Windows system is "N" edition (for example Windows Professional N), it comes without a media pack, required for a few tasks.
+                    Please install "Microsoft Media Feature Pack".
+                    If your system has Windows Media Player available (standard), you are good to go.
+                </Paragraph>
+            </RichTextBlock>
+
+            <Grid x:Name="Checking" Margin="10,30,10,10" HorizontalAlignment="Stretch" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition  Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <FontIcon Grid.Column="0" Foreground="LightGray" FontFamily="Segoe MDL2 Assets" FontSize="60" Glyph="&#xE9F5;" Margin="10,0,10,0"/>
+
+                <RichTextBlock Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalTextAlignment="Left" Margin="10,0,10,0">
+                    <Paragraph>
+                        Checking your system compatibility and starting BLE services...
+                    </Paragraph>
+                    <Paragraph>
+                        If it takes too long, try to:
+                    </Paragraph>
+                    <Paragraph Margin="10,0,0,0">
+                        - turn your Bluetooth interface off and on again
+                    </Paragraph>
+                    <Paragraph Margin="10,0,0,0">
+                        - restart this application
+                    </Paragraph>
+                    <Paragraph Margin="10,0,0,0">
+                        - restart your system
+                    </Paragraph>
+                    <Paragraph Margin="10,0,0,0">
+                        - use a different computer
+                    </Paragraph>
+                    <Paragraph Margin="0,5,0,0">
+                        For more troubleshooting see also
+                        <Hyperlink NavigateUri="https://github.com/smartlockpicking/BLE_HackMe/wiki/FAQ">FAQ</Hyperlink>.
+                    </Paragraph>
+                </RichTextBlock>
+            </Grid>
+
+            <StackPanel x:Name="Success" Visibility="Collapsed" Orientation="Horizontal" Margin="10,30,10,10">
+                <FontIcon Foreground="SpringGreen" FontFamily="Segoe MDL2 Assets" FontSize="60" Glyph="&#xE930;" Margin="10,0,10,0"/>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Margin="10,5,5,5" VerticalAlignment="Center">
+                        Hooray, looks like your device is supported!
+                    </TextBlock>
+                    <Button x:Name="ProceedButton" Content="Proceed to the first task" Click="{x:Bind rootPage.NextTaskButton_Click}" Margin="0,5,5,10" HorizontalAlignment="center"/>
+                </StackPanel>
+            </StackPanel>
+
+           <Grid x:Name="ErrorStarting" Margin="10,30,10,10" HorizontalAlignment="Stretch" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition  Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <FontIcon Grid.Column="0" Foreground="Red" FontFamily="Segoe MDL2 Assets" FontSize="60" Glyph="&#xEA39;" Margin="10,0,10,0"/>
+                <RichTextBlock Grid.Column="1" TextWrapping="Wrap" Margin="10,5,5,5">
+                    <Paragraph>
+                        Sorry, there is no Bluetooth adapter, or the default Bluetooth adapter cannot act as a Bluetooth server.
+                        You can try to:
+                    </Paragraph>
+                    <Paragraph Margin="10,0,0,0">
+                        - turn your Bluetooth interface off and on again
+                    </Paragraph>
+                    <Paragraph Margin="10,0,0,0">
+                        - restart this application
+                    </Paragraph>
+                    <Paragraph Margin="10,0,0,0">
+                        - restart your system
+                    </Paragraph>
+                    <Paragraph Margin="10,0,0,0">
+                        - use a different computer
+                    </Paragraph>
+                    <Paragraph Margin="0,5,0,0">
+                        For more troubleshooting see also
+                        <Hyperlink NavigateUri="https://github.com/smartlockpicking/BLE_HackMe/wiki/FAQ">FAQ</Hyperlink> .
+                    </Paragraph>
+                </RichTextBlock>
+            </Grid>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

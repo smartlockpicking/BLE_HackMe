@@ -1,0 +1,101 @@
+﻿<Page
+    x:Class="BLE_Hackme.Scenario_08_Notifications"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BLE_Hackme"
+    xmlns:uc="using:BLE_Hackme.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="12,10,12,12">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="BLE Notifications" Style="{StaticResource SampleHeaderTextStyle}"/>
+                <FontIcon x:Name="Solved" Style="{StaticResource ScenarioCompletedIconStyle}" Glyph="&#xE930;" />
+            </StackPanel>
+
+            <uc:ScenarioSubHeaderIntro />
+
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    Besides reading characteristic value, it is also possible to subscribe to it.
+                The device will automatically send a notification whenever the value update is available, eliminating the need for manual read.
+                There are two types of notifications:
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    - <Bold>Notification</Bold> ("NOTIFY" property) - without receive confirmation
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    - <Bold>Indication</Bold> ("INDICATE" property) - the receiver confirms packet reception to sending device.
+                </Paragraph>
+                <Paragraph Margin="0,5,0,0">
+                    Characteristic can have both Notify and Indicate or just one of them.
+                    The difference is just in low level Bluetooth packets, the transmitted data is the same, and for application it makes no difference.
+                </Paragraph>
+            </RichTextBlock>
+            
+            <uc:ScenarioSubHeaderTask />
+
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    
+                Connect to your device, find Heart Rate service and its characteristic.
+                Try reading current Heart Rate Measurement value using single down arrow
+                <InlineUIContainer>
+                        <Image Source="../Assets/nrf_connect_read_arrow.png" Width="20" HorizontalAlignment="Center" Margin="5,5,5,0" />
+                    </InlineUIContainer>
+                    . Try it multiple times to see if the value changes in time.
+                </Paragraph>
+                <Paragraph>
+                    Next, subscribe to the Heart Rate Measurement characteristic notification using the subscribe button:
+                    <InlineUIContainer>
+                        <Image Source="../Assets/nrf_connect_notify_arrow.png" Width="20" HorizontalAlignment="Center" Margin="5,5,5,0" />
+                    </InlineUIContainer>
+                    The button will change its status and characteristic value will be updated every second.
+                </Paragraph>
+                <Paragraph Margin="0,5,0,0">
+                    Your task is to submit current beats per minute value.
+                </Paragraph>
+                <Paragraph>
+                    If needed, you can unsubscribe from notifications by tapping again on the same button.
+                </Paragraph>
+            </RichTextBlock>
+
+            <uc:ScenarioSubHeaderSubmit />
+
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Enter the current heart rate (decimal bpm) indicated (+/- 5):" Margin="10,5,5,5"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="ValueToEnter" PlaceholderText="Enter the value here" Margin="10,5,5,5" />
+                    <Button x:Name="Submit" Content="Submit" Click="{x:Bind ValueSubmitButton_Click}" Margin="10,5,5,5"/>
+                </StackPanel>
+            </StackPanel>
+
+            <uc:ScenarioSubHeaderHints />
+            
+            <StackPanel Orientation="Vertical" x:Name="Hint1" Visibility="Collapsed" Margin="0,5,0,5">
+                <TextBlock TextWrapping="Wrap">
+                    As a result of subscribe action (3 down arrows by "Heart Rate Measurement" characteristic of "Heart Rate" service), 
+                    current indication should be visible as "Value" below the characteristic UUID/name.
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint2" Visibility="Collapsed" Margin="0,5,0,5">
+                <RichTextBlock TextWrapping="Wrap">
+                    <Paragraph>
+                        The Heart Rate Measurement characteristic value should look like this:
+                    </Paragraph>
+                    <Paragraph>
+                        <InlineUIContainer>
+                            <Image Source="../Assets/nrf_connect_heart_rate_notification.png" Width="300" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                        </InlineUIContainer>
+                    </Paragraph>
+                </RichTextBlock>
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

@@ -1,0 +1,149 @@
+﻿<Page
+    x:Class="BLE_Hackme.Scenario_13_RGB"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BLE_Hackme"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="using:BLE_Hackme.UserControls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="12,10,12,12">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Reverse engineering BLE communication protocol" Style="{StaticResource SampleHeaderTextStyle}"/>
+                <FontIcon x:Name="Solved" Style="{StaticResource ScenarioCompletedIconStyle}" Glyph="&#xE930;" />
+            </StackPanel>
+            
+            <uc:ScenarioSubHeaderIntro />
+
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    A typical BLE device comes with an associated mobile application to control its behaviour.
+                The data exchanged with device (sent from the phone via writes and received back via reads/notifications), 
+                may range from simple, single bytes ("00"/"01"), through slightly more sophisticated (more bytes, extra "header" and "checksum"),
+                up to very complex and encrypted protocols. 
+                It may be more difficult to guess the correct data compared to the simple light bulb switch from previous tasks.
+                </Paragraph>
+                <Paragraph>
+                    With a very few exceptions (where mobile application acts as a dumb 'proxy' sending BLE commands to device directly from the cloud),
+                the protocol logic is embedded in the mobile application. So, having insight into application source code, you could determine how the BLE communication works.                
+                The source code is obviously not available directly for end users, who download binary versions of applications from Play Store.
+                Decompiling Android binaries is however in most cases surprisingly simple task.
+                First, the application binary (apk) has to be retrieved - for example from special, unofficial sites (look for "apk download").
+                Next, a decompiler can be used against the binary.
+                Popular choices include for example
+                    <Hyperlink NavigateUri="https://github.com/skylot/jadx">JADX</Hyperlink> or
+                    <Hyperlink NavigateUri="https://github.com/Konloch/bytecode-viewer">Bytecode viewer</Hyperlink> .
+                </Paragraph>
+                <Paragraph>
+                    Unless developers took extra steps to prevent it (binary code obfuscation, using native C instead of Java...), 
+                the resulting decompiled Java code - although different than original - is readable enough to understand the application logic.
+                </Paragraph>
+                <Paragraph>
+                    Mobile application reversing technical details are beyond the scope of this BLE HackMe, 
+                there are however plenty of resources and tutorials on the topic easily available.
+                </Paragraph>
+            </RichTextBlock>
+            
+            <uc:ScenarioSubHeaderTask />
+
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    The light bulb has yet another characteristic, which allows to change its color and brightness level.
+                You will surely find it in the light bulb service. The valid data format to send via write is however unknown.
+
+                </Paragraph>
+                <Paragraph>
+                    Fortunately, there was a mobile application possible to decompile.    
+                The decompiled source code snippet responsible for sending valid request follows:
+                </Paragraph>
+                <Paragraph  FontFamily="Courier New" Margin="20,10,0,0">
+                    public static final byte ARGB_FRAME_PREFIX = (byte) -86;
+                </Paragraph>
+                <Paragraph  FontFamily="Courier New" Margin="20,0,0,10">
+                    public static final byte FRAME_SUFFIX = (byte) -1;
+                </Paragraph>
+                <Paragraph  FontFamily="Courier New" Margin="20,0,0,0">
+                    public bool a(int i) {
+                </Paragraph>
+                <Paragraph  FontFamily="Courier New" Margin="40,0,0,0">
+                    byte alpha = (byte) Color.alpha(i);
+                </Paragraph>
+                <Paragraph  FontFamily="Courier New" Margin="40,0,0,0">
+                    byte red = (byte) Color.red(i);
+                </Paragraph>
+                <Paragraph  FontFamily="Courier New" Margin="40,0,0,0">
+                    byte green = (byte) Color.green(i);
+                </Paragraph>
+                <Paragraph  FontFamily="Courier New" Margin="40,0,0,0">
+                    byte blue = (byte) Color.blue(i);
+                </Paragraph>
+                <Paragraph  FontFamily="Courier New" Margin="40,0,0,0">
+                    byte[] bArr = new byte[]{ARGB_FRAME_PREFIX, alpha, red, green, blue, FRAME_SUFFIX};
+                </Paragraph>
+                <Paragraph  FontFamily="Courier New" Margin="40,0,0,0">
+                    return this.c.e.b(bArr);
+                </Paragraph>
+                <Paragraph FontFamily="Courier New" Margin="20,0,0,10">
+                    }
+                </Paragraph>
+                <Paragraph>
+                    Your task is to analyse the decompiled source code, and based on it 
+                create a valid request to light bulb RGB characteristic - setting it to half-dim pure red.
+                </Paragraph>
+                <Paragraph Margin="0,5,0,0">
+                    Of course you can then set any color and brightness level you like.
+                    Maybe even record a macro to change the colors?
+                </Paragraph>
+            </RichTextBlock>
+
+            <uc:ScenarioSubHeaderSimulatedDevice />
+            
+            <uc:LightBulbUserControl x:Name="LightBulb"/>
+
+            <uc:ScenarioSubHeaderHints />
+
+            <StackPanel Orientation="Vertical" x:Name="Hint1" Visibility="Collapsed" Margin="0,5,0,5">
+                <TextBlock TextWrapping="Wrap">
+                    The decompiled method "a" (original method name compressed to single letter) takes a 32-bit integer as an input, and then using 
+                    <Hyperlink NavigateUri="https://developer.android.com/reference/android/graphics/Color">Android Color</Hyperlink>
+                    splits it into alpha (dim), red, green and blue single bytes (8 bit).
+                    Next, it creates a new byte array "bArr" (which looks like a communication protocol frame), 
+                    and then probably sends it to device via BLE using another method "this.c.e.b".
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint2" Visibility="Collapsed" Margin="0,5,0,5" >
+                <TextBlock TextWrapping="Wrap">
+                    In the decompiled source, single bytes are often represented in signed form, using 
+                    <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Two%27s_complement">two's complement</Hyperlink>.
+                    It means, the decimal value of the bits is not 0...255, but rather -128...127.
+                    You will need to translate this signed byte into hex.
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint3" Visibility="Collapsed" Margin="0,5,0,5" >
+                <TextBlock TextWrapping="Wrap">
+                    Signed byte -86 = 0xAA hex, and -1 = 0xFF hex.
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint4" Visibility="Collapsed" Margin="0,5,0,5">
+                <TextBlock TextWrapping="Wrap">
+                    Valid frame is: AA ALPHA RED GREEN BLUE FF, with color and alpha (dim) values ranging from 00 to FF.
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint5" Visibility="Collapsed" Margin="0,5,0,5" >
+                <TextBlock TextWrapping="Wrap">
+                    In order to set pure red half dim, choose max value for red (FF), and 00 for other colors, and about 255/2 in hex as value for alpha.
+                </TextBlock>
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+
+</Page>

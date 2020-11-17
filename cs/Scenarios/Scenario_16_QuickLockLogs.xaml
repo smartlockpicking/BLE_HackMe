@@ -1,0 +1,141 @@
+﻿<Page
+    x:Class="BLE_Hackme.Scenario_16_QuickLockLogs"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BLE_Hackme"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="using:BLE_Hackme.UserControls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="12,10,12,12">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Smart lock information leak" Style="{StaticResource SampleHeaderTextStyle}"/>
+                <FontIcon x:Name="Solved" Style="{StaticResource ScenarioCompletedIconStyle}" Glyph="&#xE930;" />
+            </StackPanel>
+
+            <uc:ScenarioSubHeaderIntro />
+
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    Even having some services secured, BLE devices often come with additional, unsecured functionality - available without prior authentication.
+                For example, many wearables allow for unauthorized read of firmware revision and serial number - what may help with tracking specific users.
+                Another example is an unsecured BLE service exposing internal serial adapter via characteristic write/notify, 
+                or some none-core functionality left wide open.
+                </Paragraph>
+            </RichTextBlock>
+
+            <uc:ScenarioSubHeaderTask />
+
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    The same
+                    <Hyperlink NavigateUri="https://www.thequicklock.com/product-padlock.php">Quicklock Bluetooth Smart padlock</Hyperlink>
+                    that you have exploited in previous task, allows also to retrieve history log of unlocks.
+                </Paragraph>
+                <Paragraph Margin="0,5,0,0">
+                    Find this additional service, and figure out how to download the history log. Check if this process requires prior authentication.
+                    For parsing the received data format, relevant fragment of the decompiled
+                    <Hyperlink NavigateUri="https://play.google.com/store/apps/details?id=com.itonsoft.itonlock">Quicklock Android application</Hyperlink> follows:
+                </Paragraph>
+                <Paragraph>
+                    <InlineUIContainer>
+                        <Image Source="../Assets/quicklock_date_format_decompiled.png" Width="600" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                    </InlineUIContainer>
+                </Paragraph>
+            </RichTextBlock>
+
+            <uc:ScenarioSubHeaderSubmit />
+
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Enter the username and date of most recent unlock:" Margin="10,5,5,5"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="ValueToEnter" PlaceholderText="username" Margin="10,5,5,5" />
+                    <CalendarDatePicker x:Name="UnlockDate" PlaceholderText="unlock date" DateFormat="{}{day.integer} {month.full} {year.full}" />
+                    <Button x:Name="Submit" Content="Submit" Click="{x:Bind ValueSubmitButton_Click}" Margin="10,5,5,5"/>
+                </StackPanel>
+            </StackPanel>
+
+            <uc:ScenarioSubHeaderHints />
+
+            <StackPanel Orientation="Vertical" x:Name="Hint1" Visibility="Collapsed" Margin="0,5,0,5">
+                <RichTextBlock TextWrapping="Wrap">
+                    <Paragraph>
+                        The Quicklock History service (0xFFF0) has 3 characteristics, and device manufacturer left handy characteristic text user descriptions: 
+                        "control!" (0xFFF1), "history!" (0xFFF2), and "phone id!" (0xFFF3):                        
+                    </Paragraph>
+                    <Paragraph>
+                        <InlineUIContainer>
+                            <Image Source="../Assets/nrf_connect_quicklock_history_service.png" Width="200" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                        </InlineUIContainer>
+                    </Paragraph>
+                </RichTextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint2" Visibility="Collapsed" Margin="0,5,0,5">
+                <RichTextBlock TextWrapping="Wrap">
+                    <Paragraph>
+                        The "phone id!" characteristic was already used during initial authentication (previous task) to send username.
+                        Of the remaining characteristics, "history!" has read/notify properties, and "control!" read/write.
+                        Try subscribing for notifications at "history!" characteristic, and sending some control command to the other one.
+                    </Paragraph>
+                </RichTextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint3" Visibility="Collapsed" Margin="0,5,0,5">
+                <RichTextBlock TextWrapping="Wrap">
+                    <Paragraph>
+                        Try sending the same command as current "command!" (0xFFF1) characteristic value.
+                        The unlock logs will be sent by device as a series of notifications to "history!" characteristic (of course if you have subscribed to it first).                        
+                        In order to see the notification history log, swipe right or select top right menu -> show log.
+                    </Paragraph>
+                </RichTextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint4" Visibility="Collapsed" Margin="0,5,0,5">
+                <RichTextBlock TextWrapping="Wrap">
+                    <Paragraph>
+                        Each received as notification data log consists of ascii-hex encoded username (preceded with one byte length), and date.
+                        Try to figure out the data format based on the decompiled source code snippet provided.
+                    </Paragraph>
+                </RichTextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint5" Visibility="Collapsed" Margin="0,5,0,5">
+                <RichTextBlock TextWrapping="Wrap">
+                    <Paragraph>
+                        The application creates 2
+                        <Hyperlink NavigateUri="https://developer.android.com/reference/java/util/GregorianCalendar">Android GregorianCalendar</Hyperlink>
+                        dates: "gcd" (2000-01-01) and "gc" (current).
+                        Next, it calculates seconds between these 2 dates, and stores them as hex value (least significant byte left).
+                    </Paragraph>
+                </RichTextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint6" Visibility="Collapsed" Margin="0,5,0,5">
+                <RichTextBlock TextWrapping="Wrap">
+                    <Paragraph>
+                        In order to get the full date out of the device storage format (seconds since 2000-01-01), 
+                        you need to:
+                    </Paragraph>
+                    <Paragraph Margin="10,0,0,0">
+                        - convert the hex value (inverting the byte order) to decimal 
+                    </Paragraph>
+                    <Paragraph Margin="10,0,0,0">
+                        - add the number of seconds since
+                        <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Unix_time">Unix Epoch</Hyperlink> to 2000-01-01, 
+                        and then convert the resulting Unix time seconds format to human readable date.
+                    </Paragraph>
+                </RichTextBlock>
+            </StackPanel>
+
+
+
+
+        </StackPanel>
+    </ScrollViewer>
+
+</Page>

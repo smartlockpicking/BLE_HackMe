@@ -1,0 +1,130 @@
+﻿<Page
+    x:Class="BLE_Hackme.Scenario_04_Beacons"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BLE_Hackme"
+    xmlns:uc="using:BLE_Hackme.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="12,10,12,12">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="BLE iBeacons" Style="{StaticResource SampleHeaderTextStyle}"/>
+                <FontIcon x:Name="Solved" Style="{StaticResource ScenarioCompletedIconStyle}" Glyph="&#xE930;" />
+            </StackPanel>
+
+            <uc:ScenarioSubHeaderIntro />
+            
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                   BLE advertisements are often used to broadcast some unique device identifiers, 
+                    which can be used for example to identify specific device or pinpoint very precise indoor location of the receiving smartphone.
+                    Practical implementations include for example: displaying local context information in a shop or gallery, automatic "check-in", integration with home automation, tracking users,
+                    or triggering other location based action.
+                   One of the most commonly used formats is BLE iBeacon. The broadcasted packet contains:
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    - <Bold>UUID</Bold>, for example "00112233-4455-6677-8899-aabbccddeeff" - usually specific for vendor or installation
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    - Two numbers (0-65535): <Bold>Major</Bold> (usually common for group of devices) and <Bold>Minor</Bold> (for individual device).
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    - transmission signal strength <Bold>RSSI</Bold>, used to calculate the actual distance from device.
+                </Paragraph>
+                <Paragraph>
+                    The beacon numbers are broadcasted as "manufacturer specific" (0xFF) data type in BLE advertisement packets.
+                 </Paragraph>
+            </RichTextBlock>
+            
+            <uc:ScenarioSubHeaderTask />
+            
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    Your HackMe device advertisement has just changed. 
+                    It does not broadcast its name any more (nRF Connect shows N/A), has different flags (no "CONNECT" button), 
+                    and the Bluetooth address should also have changed.
+                </Paragraph>
+                <Paragraph Margin="0,5,0,0">
+                    <Bold>Note some potential technical issues:</Bold>
+                </Paragraph>
+                <Paragraph Margin="10,5,0,0">
+                    1. During the process of changing into a different simulated device, as a side effect you may notice several inactive "ghost" devices in nRF Connect, 
+                    each with a different Bluetooth address. Swipe down the scan results to refresh the view and discard these unwanted "ghosts".
+                </Paragraph>
+                <Paragraph Margin="10,5,0,0">
+                    2. Your Windows still "glitches" with its own advertisement independently (visible with Windows icon in nRF Connect). Due to Windows restrictions, 
+                    it may have higher priority now than in previous tasks, so the HackMe would switch to "iBeacon" just for a very short, tricky to catch moment.
+                    If you cannot catch it, in some cases returning to previous task (change simulated device type) and back again may help with solving the issue.
+                </Paragraph>
+                <Paragraph Margin="0,10,0,0">
+                    The iBeacon advertisement should look like this:
+                </Paragraph>
+                
+                <Paragraph>
+                    <InlineUIContainer>
+                        <Image Source="../Assets/nrf_connect_ibeacon_advertisement.png" Width="300" HorizontalAlignment="Center" Margin="20,10,0,10"/>
+                    </InlineUIContainer>
+                </Paragraph>
+                <Paragraph>
+                    Take a look at the "RAW" iBeacon packet
+                    (Note: if your raw packet starts with "0x1EFF0600" it means you caught this Microsoft packet, not iBeacon).
+                    You will quickly notice that there is no mystery - the data is simply embedded as raw hex into "0xFF" (Manufacturer Specific") field:
+                </Paragraph>
+                <Paragraph>
+                    <InlineUIContainer>
+                        <Image Source="../Assets/nrf_connect_ibeacon_raw_explained.png" Width="600" HorizontalAlignment="Center" Margin="20,10,0,10"/>
+                    </InlineUIContainer>
+                </Paragraph>
+                <Paragraph>
+                    You may have noticed also a "CLONE" button by the advertisement details.
+                    Yes, you guessed right - it allows to copy the advertisement data, and turn your phone into BLE device advertising "clone" ("Advertiser" tab).
+                    The feature has some exceptions, for example cannot clone device name, but cloning iBeacon data will work.
+                </Paragraph>
+                <Paragraph Margin="0,10,0,0">
+                    Your task is to note the iBeacon advertisement parameters, especially Major and Minor numbers (randomly generated for you).
+                </Paragraph>
+
+            </RichTextBlock>
+            
+            <uc:ScenarioSubHeaderSubmit />
+            
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Enter the values transmitted by your beacon:" Margin="10,5,5,5"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="MajorNumber" PlaceholderText="Major number" Margin="10,5,5,5" />
+                    <TextBox x:Name="MinorNumber" PlaceholderText="Minor number" Margin="10,5,5,5" />
+                    <Button x:Name="Submit" Content="Submit" Click="{x:Bind ValueSubmitButton_Click}" Margin="10,5,5,5"/>
+                </StackPanel>
+            </StackPanel>
+
+            <uc:ScenarioSubHeaderHints />
+
+            <StackPanel Orientation="Vertical" x:Name="Hint1" Visibility="Collapsed" Margin="0,5,0,5">
+                <TextBlock TextWrapping="Wrap">           
+                  If you cannot see the iBeacon advertisement neither your computer's internal Windows broadcast packet (see the previous task description how it looks like),
+                    try restarting (Bluetooth interface, application, computer). If that does not help, you may be unlucky case of setup that does not advertise custom Bluetooth packets, 
+                    and you won't be able to solve "Beacons" and "Manufacturer Specific Advertisements" tasks. Don't worry, skip to the next task with "Connections".
+                    Check FAQ and Issues for more updates.
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint2" Visibility="Collapsed" Margin="0,5,0,5">
+                <TextBlock TextWrapping="Wrap">           
+                  The decimal values of Major and Minor are visible in advertisement details.
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint3" Visibility="Collapsed" Margin="0,5,0,5">
+                <TextBlock TextWrapping="Wrap">           
+                  If the iBeacon data is displayed too shortly in nRF Connect, you may try to press "stop scanning" in the right moment, and the data will stay static.
+                </TextBlock>
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+
+</Page>

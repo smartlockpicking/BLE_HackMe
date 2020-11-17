@@ -1,0 +1,103 @@
+﻿<Page
+    x:Class="BLE_Hackme.Scenario_10_Write"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BLE_Hackme"
+    xmlns:uc="using:BLE_Hackme.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="12,10,12,12">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Characteristic Write" Style="{StaticResource SampleHeaderTextStyle}"/>
+                <FontIcon x:Name="Solved" Style="{StaticResource ScenarioCompletedIconStyle}" Glyph="&#xE930;" />
+            </StackPanel>
+
+            <uc:ScenarioSubHeaderIntro />
+
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    So far you have learned how to receive data from device by reading and subcribing to characteristic value.
+                Characteristics may also have a "write" property, which allows for submitting a value to device.
+                </Paragraph>
+            </RichTextBlock>
+            
+            <uc:ScenarioSubHeaderTask />
+
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    
+                Using your new skills in regards to services, characteristics and descriptors, 
+                connect to your HackMe device, find proprietary service responsible for light bulb control, and a characteristic inside it that allows to switch the light on and off.
+                Read the current state of the switch, and try to turn it on.
+                </Paragraph>
+                <Paragraph>
+                In nRF Connect use the up arrow                     
+                <InlineUIContainer>
+                        <Image Source="../Assets/nrf_connect_write_arrow.png" Width="20" HorizontalAlignment="Center" Margin="5,5,5,0" />
+                    </InlineUIContainer>
+ by the characteristic to write a value to it.
+                Once succeeded, you can turn the light off again if you like.
+                </Paragraph>
+            </RichTextBlock>
+
+            <uc:ScenarioSubHeaderSimulatedDevice />
+                       
+            <uc:LightBulbUserControl x:Name="LightBulb" />
+
+            <uc:ScenarioSubHeaderHints />
+
+            <StackPanel Orientation="Vertical" x:Name="Hint1" Visibility="Collapsed" Margin="0,5,0,5">
+                <TextBlock TextWrapping="Wrap">
+                As opposed to typical, Bluetooth registered services, the proprietary service and its characteristics will have full length UUIDs.
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint2" Visibility="Collapsed" Margin="0,5,0,5">
+                <TextBlock TextWrapping="Wrap">
+                Check the 0x2901 Text Descriptor value to find which characteristic is responsible for light bulb switching.
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint3" Visibility="Collapsed" Margin="0,5,0,5">
+                <TextBlock TextWrapping="Wrap">
+                    Get current state of the light bulb (off) by reading first characteristic of first proprietary (long UUID) service.
+                    How do you think, what would be the value for "on"?
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint4" Visibility="Collapsed" Margin="0,5,0,5">
+                <RichTextBlock TextWrapping="Wrap">
+                    <Paragraph>
+                        After selecting up arrow by the light bulb switch characteristic, 
+                        the application should present you with the write value form:
+                    </Paragraph>
+                    <Paragraph>
+                        <InlineUIContainer>
+                            <Image Source="../Assets/nrf_connect_write_value_form.png" Width="300" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                        </InlineUIContainer>
+                    </Paragraph>
+                </RichTextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint5" Visibility="Collapsed" Margin="0,5,0,5">
+                <RichTextBlock TextWrapping="Wrap">
+                    <Paragraph>
+                        You can send proper value as byte:
+                    </Paragraph>
+                    <Paragraph>
+                        <InlineUIContainer>
+                            <Image Source="../Assets/nrf_connect_write_01.png" Width="300" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                        </InlineUIContainer>
+                    </Paragraph>
+                </RichTextBlock>
+            </StackPanel>
+
+
+        </StackPanel>
+    </ScrollViewer>
+
+</Page>

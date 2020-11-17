@@ -1,0 +1,205 @@
+﻿<Page
+    x:Class="BLE_Hackme.Scenario_15_QuickLockReplay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BLE_Hackme"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="using:BLE_Hackme.UserControls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="12,10,12,12">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Smart lock replay" Style="{StaticResource SampleHeaderTextStyle}"/>
+                <FontIcon x:Name="Solved" Style="{StaticResource ScenarioCompletedIconStyle}" Glyph="&#xE930;" />
+            </StackPanel>
+
+            <uc:ScenarioSubHeaderIntro />
+
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    Majority of BLE devices do not require Bluetooth pairing (bonding), 
+                and as a result the communication is not encrypted on Bluetooth link layer.
+                It can of course be secured on application layer (data payload) -
+                for example using vendor's proprietary encryption or encoding. 
+                But in many cases, the authentication relies on sending just plain, static credentials
+                (like in the previous task with password) - that can be intercepted and then simply replayed by an attacker.
+                </Paragraph>
+                <Paragraph Margin="0,5,0,0">
+                    <Bold>BLE Sniffing</Bold>
+                </Paragraph>
+                <Paragraph >
+                    Without Bluetooth encryption, the transmitted packets can be sniffed out of the air by anyone in range (will work usually for at least several meters).
+                    There are multiple commercial and open tools available (as combination of hardware and software), including among others:                 
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    -
+                    <Hyperlink NavigateUri="https://greatscottgadgets.com/ubertoothone/">Ubertooth One</Hyperlink> - first open hardware and software Bluetooth sniffer, 
+                    costing about $120,
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    -
+                    <Hyperlink NavigateUri="https://www.nordicsemi.com/Software-and-tools/Development-Tools/nRF-Sniffer-for-Bluetooth-LE">nRF sniffer</Hyperlink> 
+                    - closed-source but free firmware running on variety of Nordic Semiconductor hardware (nRF51, nRF52) - available as low as $5 for bare SoC, or for example $25
+                    <Hyperlink NavigateUri="https://www.adafruit.com/product/2269">Adafruit USB sticks</Hyperlink>,
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    -
+                    <Hyperlink NavigateUri="https://github.com/virtualabs/btlejack">BtleJack</Hyperlink> - 
+                    open source firmware running on Nordic nRF51 hardware (including BBC Micro:bit), capable also of jamming and hijacking connections,
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    -
+                    <Hyperlink NavigateUri="https://github.com/nccgroup/Sniffle">SniffLE</Hyperlink> - the first open sniffer capable of intercepting Bluetooth 5,
+                    running on Texas Instruments BLE development kits (starting at about $40).
+                </Paragraph>
+                <Paragraph Margin="0,5,0,0">
+                    The open tools allow to analyse intercepted packets in "industry standard"
+                    <Hyperlink NavigateUri="https://www.wireshark.org/">Wireshark</Hyperlink> packet analyzer, available free for multiple systems.
+                </Paragraph>
+
+                <Paragraph Margin="0,5,0,0">
+                    Note: in case your goal is to examine BLE communication of mobile application running
+                    <Bold>on your own smartphone</Bold>, you don't actually need to sniff the packets out of the air.
+                    Such local data can be inspected by 
+                    <Hyperlink NavigateUri="https://source.android.com/devices/bluetooth/verifying_debugging#debugging-with-logs">Android btsnoop</Hyperlink> 
+                    that saves log to a file readable by Wireshark.
+                    Some phones (for example Nexus 5X 8.1 Android) have btsnoop TCP service that allows to connect Wireshark live, as opposed to downloading log file.
+                </Paragraph>
+            </RichTextBlock>
+
+            <uc:ScenarioSubHeaderTask />
+
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    Your task is to replay communication of 
+                    <Hyperlink NavigateUri="https://www.thequicklock.com/product-padlock.php">Quicklock Bluetooth Smart padlock</Hyperlink>
+                    and its mobile application, intercepted using nRF Sniffer running on a $15
+                    <Hyperlink NavigateUri="https://www.waveshare.com/nrf51822-eval-kit.htm">nRF51 development kit</Hyperlink>:
+                </Paragraph>
+                <Paragraph>
+                    <InlineUIContainer>
+                        <Image Source="../Assets/quicklock_sniff.jpg" Width="500" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                    </InlineUIContainer>
+                </Paragraph>
+
+                <Paragraph Margin="0,5,0,0">
+                    Download
+                    <Hyperlink NavigateUri="https://www.smartlockpicking.com/bin/hackme_quicklock.pcapng">pcap file with intercepted packets</Hyperlink> and 
+                    open it in <Hyperlink NavigateUri="https://www.wireshark.org/#download">Wireshark</Hyperlink>.
+                    You will see lots of packets, starting with the lock device advertisements. Note by the way how device name advertisement is visible in Wireshark:
+                </Paragraph>
+                <Paragraph>
+                    <InlineUIContainer>
+                        <Image Source="../Assets/wireshark_intro.png" Width="500" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                    </InlineUIContainer>
+                </Paragraph>
+                <Paragraph>
+                    In order to filter the most interesting packets with data exchanged after connecting, enter "btatt" in display filter form:
+                </Paragraph>
+                <Paragraph>
+                    <InlineUIContainer>
+                        <Image Source="../Assets/wireshark_btatt_filter_smaller.png" Width="500" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                    </InlineUIContainer>
+                </Paragraph>
+                <Paragraph>
+                    You will see some initial communication - smartphone checking the device for available services and characteristics.
+                    Scroll down some packets to see actual data (read/write/notification).
+                    By the way, note that actual low-level communication is based on
+                    <Bold>Handles</Bold> - incremental numbers assigned to each Attribute (Service, Characteristic, Descriptor, ...). 
+                    Wireshark however is able to display the service and characteristic UUIDs associated with handles.
+                    Note that this manufacturer used "short", reserved UUIDs for his proprietary service - not in accordance to Bluetooth specification.
+                </Paragraph>
+                <Paragraph Margin="0,5,0,0">
+                    If you right-click on "Value" field, you can apply this as a new column on packet list:
+                </Paragraph>
+                <Paragraph>
+                    <InlineUIContainer>
+                        <Image Source="../Assets/wireshark_apply_as_column.png" Width="500" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                    </InlineUIContainer>
+                </Paragraph>
+                <Paragraph>
+                    With this trick, the transmitted hex values will be easier visible as the new column "Value":
+                </Paragraph>
+                <Paragraph>
+                    <InlineUIContainer>
+                        <Image Source="../Assets/wireshark_new_column_value.png" Width="500" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                    </InlineUIContainer>
+                </Paragraph>
+
+                <Paragraph Margin="0,20,0,0">
+                    Your task is to analyse the sniffed data, and based on this - unlock the device.
+                </Paragraph>
+                <Paragraph Margin="0,5,0,0">
+                    Your HackMe device now simulates original Quicklock padlock via BLE. If you were connected to it (previous tasks),
+                    disconnect now, scan for the device and connect again. You should notice different services than for the light bulb.
+                    Start with a simple replay of all the write requests sent from mobile device to the lock.
+                    Next, identify the username and password, and check which parameters are obligatory.
+                    How about preparing the unlock macro?
+                </Paragraph>
+              
+
+            </RichTextBlock>
+
+            <MediaElement x:Name="VoiceUnlocking" AutoPlay="False"/>
+
+            <uc:ScenarioSubHeaderSimulatedDevice />
+
+            <uc:SmartLockUserControl x:Name="SmartLock" />
+
+            <uc:ScenarioSubHeaderHints />
+
+            <StackPanel Orientation="Vertical" x:Name="Hint1" Visibility="Collapsed" Margin="0,5,0,5">
+                <RichTextBlock TextWrapping="Wrap">
+                    <Paragraph>
+                        After applying "btatt" filter and new "Value" column, you should see the communication between mobile application and the lock:
+                    </Paragraph>
+                    <Paragraph>
+                        <InlineUIContainer>
+                            <Image Source="../Assets/wireshark_quicklock_authentication.png" Width="500" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                        </InlineUIContainer>
+                    </Paragraph>
+                </RichTextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint2" Visibility="Collapsed" Margin="0,5,0,5">
+                <RichTextBlock TextWrapping="Wrap">
+                    <Paragraph>
+                        The data sent from mobile device (username, 8-digit password, unlock command) is transmitted via characteristic write.
+                        You can apply a new filter to display only characteristic writes - either via right click on "Opcode" and "Apply as filter":
+                    </Paragraph>
+                    <Paragraph>
+                        <InlineUIContainer>
+                            <Image Source="../Assets/wireshark_apply_filter_write_request.png" Width="500" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                        </InlineUIContainer>
+                    </Paragraph>
+                    <Paragraph>
+                        Or by entering the resulting filter "btatt.opcode == 0x12" directly to filter tab.
+                    </Paragraph>
+                    
+                </RichTextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint3" Visibility="Collapsed" Margin="0,5,0,5">
+                <RichTextBlock TextWrapping="Wrap">
+                    <Paragraph>
+                        The data sent from mobile device (username, 8-digit password, unlock command) looks like this:
+                    </Paragraph>
+                    <Paragraph>
+                        <InlineUIContainer>
+                            <Image Source="../Assets/wireshark_filter_write_request.png" Width="500" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                        </InlineUIContainer>
+                    </Paragraph>
+                    <Paragraph>
+                        Notice the service and characteristic UUIDs in Wireshark.
+                    </Paragraph>
+                </RichTextBlock>
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+
+</Page>

@@ -1,0 +1,119 @@
+﻿<Page
+    x:Class="BLE_Hackme.Scenario_03_Advertisements"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BLE_Hackme"
+    xmlns:uc="using:BLE_Hackme.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="12,10,12,12">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="BLE Advertisements" Style="{StaticResource SampleHeaderTextStyle}"/>
+                <FontIcon x:Name="Solved" Style="{StaticResource ScenarioCompletedIconStyle}" Glyph="&#xE930;" />
+            </StackPanel>
+            
+            <uc:ScenarioSubHeaderIntro />
+            
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    Bluetooth Low Energy devices broadcast small packets called "advertisements". 
+                These packets are by design public (with a small exception of very uncommon "targeted advertisements"), and available for any receiver within Bluetooth range.
+                The information broadcasted may contain for example some unique identifier, device name, state, sensor indication, or any other data the manufacturer would like to share.
+                The data is formatted according to
+                    <Hyperlink NavigateUri="https://www.bluetooth.com/specifications/assigned-numbers/generic-access-profile/">Bluetooth Generic Access Profile specification</Hyperlink>.
+                Each transmitted field has associated GAP "Data Type", following its payload length and value.
+                    The most commonly used data types include:
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    - Flags - indicating device capabilities
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                    - Device name
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                        - List of Service UUIDs - device services (features) available after connecting (we'll get to it later)
+                </Paragraph>
+                <Paragraph Margin="10,0,0,0">
+                            - Manufacturer specific - proprietary, vendor data.
+                </Paragraph>
+            </RichTextBlock>
+            
+            <uc:ScenarioSubHeaderTask />
+            
+            <RichTextBlock TextWrapping="Wrap" Margin="0,0,0,0">
+                <Paragraph>
+                    In previous task you have identified your HackMe device, and noticed its name.
+                Now tap on device name (not yet "CONNECT" button, we will get to it later), 
+                the application will expand some more information about the broadcasted packet:
+                </Paragraph>
+                <Paragraph>
+                    <InlineUIContainer>
+                        <Image Source="../Assets/nrf_connect_advertisement_details.png" Width="300" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                    </InlineUIContainer>
+                </Paragraph>
+                <Paragraph>
+                    The advertisement payload can change in time. 
+                    Windows devices advertise their own BLE packets independently in the background, 
+                    and you may notice it as a short "glitch" in the HackMe device advertisements.
+                    nRF Connect will show a Windows logo icon by the device name.
+                    Just ignore this side effect:
+                </Paragraph>
+                <Paragraph>
+                    <InlineUIContainer>
+                        <Image Source="../Assets/nrf_connect_microsoft_advertisement.png" Width="300" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                    </InlineUIContainer>
+                </Paragraph>
+
+                <Paragraph>
+                To see the "raw" hex data transmitted in packet, use the "RAW" button:
+                </Paragraph>
+                <Paragraph>
+                    <InlineUIContainer>
+                        <Image Source="../Assets/nrf_connect_raw_advertisement_desc.png" Width="300" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                    </InlineUIContainer>
+                </Paragraph>
+                <Paragraph>
+                    Check how the LEN, TYPE, VALUE are encoded in the raw packet.
+                    Your task is to submit the raw value of 0x03 field. 
+                    By the way, try to decode ASCII HEX value of 0x09. For example, use "From Hex" recipe of
+                    <Hyperlink NavigateUri="https://gchq.github.io/CyberChef/">CyberChef</Hyperlink>.
+                    You can also tap "MORE" button, to see the Flags (type 0x01) value explained:
+                </Paragraph>
+                <Paragraph>
+                    <InlineUIContainer>
+                        <Image Source="../Assets/nrf_connect_advertisement_flags.png" Width="300" HorizontalAlignment="Center" Margin="20,5,5,5"/>
+                    </InlineUIContainer>
+                </Paragraph>
+
+            </RichTextBlock>
+            
+            <uc:ScenarioSubHeaderSubmit />
+            
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Enter the raw hex value of field type 0x03" Margin="10,5,5,5"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="ValueToEnter" PlaceholderText="Enter the value here" Margin="10,5,5,5" />
+                    <Button x:Name="Submit" Content="Submit" Click="{x:Bind ValueSubmitButton_Click}" Margin="10,5,5,5"/>
+                </StackPanel>
+            </StackPanel>
+
+            <uc:ScenarioSubHeaderHints />
+
+            <StackPanel Orientation="Vertical" x:Name="Hint1" Visibility="Collapsed" Margin="0,5,0,5">
+                <TextBlock TextWrapping="Wrap">           
+                  Type 0x03 contains "complete list of short service uuids". Each short service UUID is 16-bit (0xXXXX) value.
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" x:Name="Hint2" Visibility="Collapsed" Margin="0,5,0,5">
+                <TextBlock TextWrapping="Wrap">           
+                  The raw hex data in the 0x03 field is stored as "little endian" format (the bytes are inversed).
+                </TextBlock>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
