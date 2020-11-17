@@ -37,7 +37,7 @@
                             <TextBlock Text="|"  Style="{StaticResource SeparatorStyle}" VerticalAlignment="Center" Margin="2,0,2,0"/>
                             <HyperlinkButton Content="Source code" Tag="https://github.com/smartlockpicking/BLE_HackMe" Click="Footer_Click" FontSize="12" Style="{StaticResource HyperlinkStyle}"/>
                             <TextBlock Text="|"  Style="{StaticResource SeparatorStyle}" VerticalAlignment="Center" Margin="2,0,2,0"/>
-                            <HyperlinkButton Content="Issues" Tag="https://github.coms/smartlockpicking/BLE_HackMe/issues" Click="Footer_Click" FontSize="12" Style="{StaticResource HyperlinkStyle}"/>
+                            <HyperlinkButton Content="Issues" Tag="https://github.com/smartlockpicking/BLE_HackMe/issues" Click="Footer_Click" FontSize="12" Style="{StaticResource HyperlinkStyle}"/>
                         </StackPanel>
                     </StackPanel>
                 </RelativePanel>
