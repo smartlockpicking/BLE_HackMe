@@ -9,6 +9,7 @@ using Windows.Security.Cryptography;
 using Windows.ApplicationModel.Core;
 using Windows.Storage.Streams;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
+using Windows.UI.Popups;
 
 namespace BLE_Hackme.BLEServices
 {
@@ -168,12 +169,19 @@ namespace BLE_Hackme.BLEServices
                 async () =>
                 {
                     var request = await args.GetRequestAsync();
-
-                    Debug.WriteLine($"Characteristic_ReadRequested - Length {request.Length}, State: {request.State}, Offset: {request.Offset}");
-
-                    if (!ReadRequested(args.Session, request))
+                    if (request != null)
                     {
-                        request.RespondWithValue(Value);
+                        Debug.WriteLine($"Characteristic_ReadRequested - Length {request.Length}, State: {request.State}, Offset: {request.Offset}");
+
+                        if (!ReadRequested(args.Session, request))
+                        {
+                            request.RespondWithValue(Value);
+                        }
+                    }
+                    else
+                    {
+                        var Msg = new MessageDialog("There was a communication issue. As a temporary workaround, please try pairing the device with Windows first.", "BLE HackMe Comm. Issue");
+                        await Msg.ShowAsync();
                     }
 
                     deferral.Complete();
