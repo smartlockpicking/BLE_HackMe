@@ -23,7 +23,7 @@ It is also possible to use other BLE tools, for example running on Linux or Mac,
 
 Binary version is available in Microsoft Store:
 
-[https://www.microsoft.com/en-us/p/ble-hackme/9n7pnvs9j1b7](https://www.microsoft.com/en-us/p/ble-hackme/9n7pnvs9j1b7)
+[https://www.microsoft.com/store/apps/9N7PNVS9J1B7](https://www.microsoft.com/store/apps/9N7PNVS9J1B7)
 
 ## Building from source
 
