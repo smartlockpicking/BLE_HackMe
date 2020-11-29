@@ -18,8 +18,8 @@
                 <Paragraph>
                     The project aims to introduce the BLE protocol and its security basics.
                 Your computer with Bluetooth interface will simulate various BLE devices - on the radio layer working exactly as real ones.
-                In a series of tasks you will get familiar with BLE advertisements, beacons, connections, take control over talking BLE smart bulb, 
-                reverse-engineer the communication, brute force passwords, and even hack real smart lock!
+                In a series of tasks you will get familiar with BLE advertisements, beacons, connections, services and characteristics. 
+                This initial knowledge will allow for further research and security analysis of various Bluetooth devices.
                </Paragraph>
                 <Paragraph>
                     For solving the tasks you will need Android phone (iOS has limited low level BLE features). 
