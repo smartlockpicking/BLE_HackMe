@@ -61,8 +61,8 @@ namespace BLE_Hackme
 
             if (!String.IsNullOrEmpty(MajorStr) && !String.IsNullOrEmpty(MinorStr)) 
             {
-                var Major = Convert.ToUInt16(onlyDigits.Replace(MajorNumber.Text, ""));
-                var Minor = Convert.ToUInt16(onlyDigits.Replace(MinorNumber.Text, ""));
+                var Major = Convert.ToUInt16(MajorStr);
+                var Minor = Convert.ToUInt16(MinorStr);
 
                 if ((Major == rootPage.Ble.iBeaconMajor) && (Minor == rootPage.Ble.iBeaconMinor))
                 {
