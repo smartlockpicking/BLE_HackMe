@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 
 namespace BLE_Hackme
@@ -52,13 +53,22 @@ namespace BLE_Hackme
 
         private void ValueSubmitButton_Click()
         {
-            var Major = Convert.ToUInt16(MajorNumber.Text);
-            var Minor = Convert.ToUInt16(MinorNumber.Text);
+            //remove everything but digits
+            Regex onlyDigits = new Regex(@"[^\d]");
 
-            if ( (Major == rootPage.Ble.iBeaconMajor) && (Minor == rootPage.Ble.iBeaconMinor))
+            var MajorStr = onlyDigits.Replace(MajorNumber.Text, "");
+            var MinorStr = onlyDigits.Replace(MinorNumber.Text, "");
+
+            if (!String.IsNullOrEmpty(MajorStr) && !String.IsNullOrEmpty(MinorStr)) 
             {
-                rootPage.NotifyCorrect(scenarioName);
-                Solved.Visibility = Visibility.Visible;
+                var Major = Convert.ToUInt16(onlyDigits.Replace(MajorNumber.Text, ""));
+                var Minor = Convert.ToUInt16(onlyDigits.Replace(MinorNumber.Text, ""));
+
+                if ((Major == rootPage.Ble.iBeaconMajor) && (Minor == rootPage.Ble.iBeaconMinor))
+                {
+                    rootPage.NotifyCorrect(scenarioName);
+                    Solved.Visibility = Visibility.Visible;
+                }
             }
             else
             {
