@@ -58,7 +58,9 @@
                 <Paragraph Margin="10,5,0,0">
                     2. Your Windows still "glitches" with its own advertisement independently (visible with Windows icon in nRF Connect). Due to Windows restrictions, 
                     it may have higher priority now than in previous tasks, so the HackMe would switch to "iBeacon" just for a very short, tricky to catch moment.
-                    If you cannot catch it, in some cases returning to previous task (change simulated device type) and back again may help with solving the issue.
+                    For better experience, you can temporarily
+                    <Bold>turn off these Windows BLE packets</Bold> in your system, by disabling responsible functionality. Open Settings -> Shared experiences, turn off "Nearby sharing" and "Share across devices" options.
+                    From now on, you should see only BLE HackMe advertising packets.
                 </Paragraph>
                 <Paragraph Margin="0,10,0,0">
                     The iBeacon advertisement should look like this:
@@ -121,6 +123,7 @@
             <StackPanel Orientation="Vertical" x:Name="Hint3" Visibility="Collapsed" Margin="0,5,0,5">
                 <TextBlock TextWrapping="Wrap">           
                   If the iBeacon data is displayed too shortly in nRF Connect, you may try to press "stop scanning" in the right moment, and the data will stay static.
+                  Also, try turning off in your system "Nearby sharing" and "Share across devices" options in Settings -> Shared experiences.
                 </TextBlock>
             </StackPanel>
 
